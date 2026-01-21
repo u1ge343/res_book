@@ -1,58 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <title>AR.js Video on QR</title>
+  <meta charset="utf-8">
+  <title>AR.js Video Fix</title>
 
-  <!-- A-Frame -->
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-
-  <!-- AR.js -->
   <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
 
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <button id="startBtn">Tap to Start AR</button>
-  <a-scene
-    embedded
-    arjs="sourceType: webcam; debugUIEnabled: false;"
-  >
-    <!-- Video Asset -->
-    <a-assets>
-      <video
-  id="arVideo"
-  src="video.mp4"
-  preload="auto"
-  loop
-  muted
-  playsinline
-  webkit-playsinline
-  crossorigin="anonymous"
-></video>
 
-    </a-assets>
+<button id="startBtn">Tap to Start AR</button>
 
-    <!-- QR / Marker -->
-    <!-- Default Hiro marker -->
-    <a-marker
-      preset="hiro"
-      id="marker"
-    >
-      <a-video
-        src="#arVideo"
-        width="2"
-        height="1"
-        position="0 0.5 0"
-        rotation="-90 0 0"
-      ></a-video>
-    </a-marker>
+<a-scene
+  embedded
+  vr-mode-ui="enabled: false"
+  arjs="sourceType: webcam; debugUIEnabled: false;"
+>
 
-    <!-- Camera -->
-    <a-entity camera></a-entity>
-  </a-scene>
+  <a-assets>
+    <video
+      id="video"
+      src="video.mp4"
+      preload="auto"
+      loop
+      muted
+      playsinline
+      webkit-playsinline
+      crossorigin="anonymous"
+    ></video>
+  </a-assets>
 
-  <script src="script.js"></script>
+  <a-marker preset="hiro" id="marker">
+
+    <!-- USE PLANE, NOT a-video -->
+    <a-plane
+      position="0 0.5 0"
+      rotation="-90 0 0"
+      width="2"
+      height="1"
+      material="shader: flat; src: #video"
+    ></a-plane>
+
+  </a-marker>
+
+  <a-entity camera></a-entity>
+
+</a-scene>
+
+<script src="script.js"></script>
 </body>
 </html>
